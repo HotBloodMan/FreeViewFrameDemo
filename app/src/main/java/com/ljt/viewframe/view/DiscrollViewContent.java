@@ -44,6 +44,7 @@ public class DiscrollViewContent extends LinearLayout {
         Log.d(TAG,"asDiscrollvable()");
         //判断是否有自定义属性
         if(!isDiscrollvable(lp)){
+          System.out.println("isDiscrollvable false");
             return child;
         }
         DiscrollvableView discrollvableChild = new DiscrollvableView(getContext());
