@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 /**
  * Created by 1 on 2017/8/29.
  */
-
+//每一层子控件被一个FrameLayout包裹 实现滑动接口，在此赋值，在ScrollView中调
 public class DiscrollvableView extends FrameLayout implements Discrollvable {
 
     private static final int TRANSLATION_FROM_TOP = 0x01;
@@ -43,6 +43,7 @@ public class DiscrollvableView extends FrameLayout implements Discrollvable {
         super(context, attrs, defStyleAttr);
     }
 
+    //在布局加载完成后调
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -110,9 +111,11 @@ public class DiscrollvableView extends FrameLayout implements Discrollvable {
             float ratioInverse = 1 - ratio;
 
             if (mDiscrollveAlpha) {
+                //渐变 0~1
                 setAlpha(ratio);
             }
             if (isDiscrollveTranslationFrom(TRANSLATION_FROM_BOTTOM)) {
+                //比如 高度从20回到0.
                 setTranslationY(mHeight * ratioInverse);
             }
             if (isDiscrollveTranslationFrom(TRANSLATION_FROM_TOP)) {
@@ -141,6 +144,7 @@ public class DiscrollvableView extends FrameLayout implements Discrollvable {
         return (ratio - mDiscrollveThreshold) / (1.0f - mDiscrollveThreshold);
     }
 
+    //当控件不可见时 应该重置
     @SuppressLint("NewApi")
     @Override
     public void onResetDiscrollve() {

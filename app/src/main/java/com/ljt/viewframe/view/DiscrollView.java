@@ -42,6 +42,7 @@ public class DiscrollView extends ScrollView {
         if (getChildCount() != 1) {
             throw new IllegalStateException("Discrollview must host one child.");
         }
+        //拿到DiscrollViewContent控件
         View content = getChildAt(0);
         if (!(content instanceof DiscrollViewContent)) {
             throw new IllegalStateException("Discrollview must host a DiscrollViewContent.");
@@ -90,11 +91,15 @@ public class DiscrollView extends ScrollView {
             View child = mContent.getChildAt(index);
             if (!(child instanceof Discrollvable)) {
                 // it's a static view, doesn't care about
+                //说明没有自定义属性
                 continue;
             }
+            //在这里调滑动
             Discrollvable discrollvable = (Discrollvable) child;
+            //控件与屏幕顶部的距离
             int discrollvableTop = child.getTop();
             int discrollvableHeight = child.getHeight();
+            //top表示滑出去的距离
             int discrollvableAbsoluteTop = discrollvableTop - top;
 
             // the Discrollvable is too big to be discrollved when its center is
@@ -103,10 +108,12 @@ public class DiscrollView extends ScrollView {
             if (scrollViewBottom - child.getBottom() < discrollvableHeight + scrollViewHalfHeight) {
                 // the Discrollvable top reaches the DiscrollView bottom
                 if (discrollvableAbsoluteTop <= scrollViewHeight) {
+                    //说明在整个屏幕高度范围内
                     int visibleGap = scrollViewHeight - discrollvableAbsoluteTop;
                     discrollvable.onDiscrollve(clamp(visibleGap / (float) discrollvableHeight,
                             0.0f, 1.0f));
                 } else {
+                    //大于屏幕高度，不可见了，应该重置
                     discrollvable.onResetDiscrollve();
                 }
             } else {
@@ -122,6 +129,7 @@ public class DiscrollView extends ScrollView {
         }
     }
 
+    //求最大值
     public static float clamp(float value, float max, float min) {
         Log.d(TAG,"clamp(float value, float max, float min)");
         return Math.max(Math.min(value, min), max);

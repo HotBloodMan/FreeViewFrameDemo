@@ -33,6 +33,7 @@ public class DiscrollViewContent extends LinearLayout {
         setOrientation(VERTICAL);
     }
 
+    //夹心饼干 正常：自定义view识别自定义属性 相当于每个控件包了一层FrameLayout
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         super.addView(asDiscrollvable(child,(LayoutParams)params), index, params);
@@ -41,6 +42,7 @@ public class DiscrollViewContent extends LinearLayout {
 
     private View asDiscrollvable(View child, LayoutParams lp) {
         Log.d(TAG,"asDiscrollvable()");
+        //判断是否有自定义属性
         if(!isDiscrollvable(lp)){
             return child;
         }
@@ -77,6 +79,7 @@ public class DiscrollViewContent extends LinearLayout {
         return new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
     }
 
+    //parent的attrs给child
     @Override
     public LinearLayout.LayoutParams generateLayoutParams(AttributeSet attrs) {
         Log.d(TAG," generateLayoutParams(AttributeSet attrs)");
